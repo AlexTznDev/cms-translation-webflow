@@ -7,7 +7,7 @@ app.use(bodyParser.json()); // pour supporter les corps de requêtes JSON
 app.use(bodyParser.urlencoded({ extended: true })); // pour supporter les corps de requêtes URL-encoded
 
 app.post('/modify-html', (req, res) => {
-    const htmlContent = req.body.html;
+    const htmlContent = req.body.translations[0].text;
     const modifiedHtml = htmlContent.replace(/'/g, " "); // Exemple de modification
     res.send(modifiedHtml);
 });
