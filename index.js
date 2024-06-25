@@ -10,7 +10,10 @@ app.post('/modify-html', (req, res) => {
         // Extraire le HTML du champ "text"
         let htmlContent = req.body.translations[0].text;
 
-        // Convertir le HTML en JSON pour échapper automatiquement les guillemets
+        // Remplacer chaque apostrophe par un espace
+        htmlContent = htmlContent.replace(/'/g, ' ');
+
+        // Convertir le HTML modifié en JSON pour échapper automatiquement les guillemets
         let jsonResponse = JSON.stringify(htmlContent);
 
         // Envoyer le HTML échappé encapsulé dans un objet JSON
@@ -20,6 +23,7 @@ app.post('/modify-html', (req, res) => {
         res.status(400).send('Invalid request data');
     }
 });
+
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
