@@ -1,26 +1,17 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const app = express();
-const PORT = 3000;
+const port = process.env.PORT || 3000;
 
-// Middleware pour parser le body en JSON
-app.use(express.json());
+app.use(bodyParser.json()); // pour supporter les corps de requêtes JSON
+app.use(bodyParser.urlencoded({ extended: true })); // pour supporter les corps de requêtes URL-encoded
 
 app.post('/modify-html', (req, res) => {
-    if (req.body.translations && req.body.translations.length > 0 && req.body.translations[0].text) {
-        // Extraire le HTML du champ "text"
-        let htmlContent = req.body.translations[0].text;
-
-        // Convertir le HTML en JSON pour échapper automatiquement les guillemets
-        let jsonResponse = JSON.stringify({ html: htmlContent });
-
-        // Envoyer le HTML échappé encapsulé dans un objet JSON
-        res.send(jsonResponse);
-    } else {
-        // Envoyer une réponse d'erreur si les données nécessaires ne sont pas présentes
-        res.status(400).send('Invalid request data');
-    }
+    const htmlContent = req.body.translations[0].text;
+    const modifiedHtml = htmlContent.replace(/'/g, " "); // Exemple de modification
+    res.send(modifiedHtml);
 });
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+app.listen(port, () => {
+    console.log(`Server test2 running on ${port}`);
 });
