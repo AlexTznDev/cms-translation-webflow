@@ -11,7 +11,7 @@ app.post('/modify-html', (req, res) => {
         let htmlContent = req.body.translations[0].text;
 
         // Convertir le HTML en JSON pour échapper automatiquement les guillemets
-        let jsonResponse = JSON.stringify({ html: htmlContent });
+        let jsonResponse = JSON.stringify(htmlContent);
 
         // Envoyer le HTML échappé encapsulé dans un objet JSON
         res.send(jsonResponse);
